@@ -16,3 +16,22 @@ exports.isRegisterValidated=(req,res,next)=>{
         next()
     }
 }
+
+
+exports.loginValidation = [
+
+	body("email").not().isEmpty().trim().withMessage("Email is required"),
+	body("password")
+		.isLength({ min: 6 })
+		.withMessage("Password must be 6 character long"),
+];
+
+exports.isLoginValidated = (req, res, next) => {
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		console.log(req);
+		res.status(400).json(errors.array());
+	} else {
+		next();
+	}
+};
