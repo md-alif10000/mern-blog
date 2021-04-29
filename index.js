@@ -1,8 +1,11 @@
 const express =require('express')
 const env=require('dotenv')
+const connect=require('./config/db')
 const app = express();
 
 env.config()
+// Connect mongodb database
+connect()
 
 app.get('/',(req,res)=>{
     res.send('Hello ,Server is running......')
