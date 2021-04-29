@@ -7,6 +7,19 @@ env.config()
 // Connect mongodb database
 connect()
 
+
+// App config
+app.use(express.json())
+
+// Router import
+const userRouter=require('./routes/userRoutes')
+
+
+
+
+
+app.use('/',userRouter)
+
 app.get('/',(req,res)=>{
     res.send('Hello ,Server is running......')
     
