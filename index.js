@@ -5,7 +5,7 @@ const app = express();
 env.config()
 
 app.get('/',(req,res)=>{
-    res.send('Hello ,,')
+    res.send('Hello ,Server is running......')
     
 })
 
