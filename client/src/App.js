@@ -11,9 +11,9 @@ function App() {
 		<Router>
 			<Navbar />
 			<Switch>
-				<Route to='/login' component={Login} />
-				<Route to='/register' component={Register} />
-				<Route to='/' exact component={Home} />
+				<Route path='/login' component={Login} />
+				<Route path='/register' component={Register} />
+				<Route path='/' exact component={Home} />
 			</Switch>
 		</Router>
 	);
