@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 import { register } from "../../store/actions/authAction";
-import {Redirect} from 'react-router-dom'
+import { Redirect } from "react-router-dom";
 
 export default function Register(props) {
 	const [state, setstate] = useState({
@@ -14,7 +14,7 @@ export default function Register(props) {
 		confirmPassword: "",
 	});
 	const dispatch = useDispatch();
-	const { loading, registerErrors,user } = useSelector((state) => state.auth);
+	const { loading, registerErrors, user } = useSelector((state) => state.auth);
 
 	const handleInputs = (e) => {
 		setstate({
@@ -26,9 +26,9 @@ export default function Register(props) {
 
 	const userRegister = async (e) => {
 		e.preventDefault();
-			if (state.password !== state.confirmPassword) {
-				return toast.error(`Password didn't match`);
-			}
+		if (state.password !== state.confirmPassword) {
+			return toast.error(`Password didn't match`);
+		}
 		dispatch(register(state));
 	};
 
@@ -36,12 +36,10 @@ export default function Register(props) {
 		if (registerErrors.length > 0) {
 			registerErrors.map((err) => toast.error(`${err.msg}`));
 		}
-		if(user){
-			props.history.push('/dashboard')
-		
-
+		if (user) {
+			props.history.push("/dashboard");
 		}
-	}, [registerErrors]);
+	}, [registerErrors, user]);
 	return (
 		<>
 			<Helmet>

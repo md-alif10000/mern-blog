@@ -5,13 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 import { login } from "../../store/actions/authAction";
 
-export default function Login() {
+export default function Login(props) {
 	const [state, setstate] = useState({
 		email: "",
 		password: "",
 	});
 	const dispatch = useDispatch();
-	const { loading, loginErrors } = useSelector((state) => state.auth);
+	const { loading, loginErrors,user } = useSelector((state) => state.auth);
 
 	const handleInputs = (e) => {
 		setstate({
@@ -30,9 +30,12 @@ export default function Login() {
 		if (loginErrors.length > 0) {
 			loginErrors.map((err) => toast.error(`${err.msg}`));
 		}
+			if (user) {
+				props.history.push("/dashboard");
+			}
 
 		console.log(loginErrors);
-	}, [loginErrors]);
+	}, [loginErrors,user]);
 	return (
 		<>
 			<Helmet>
@@ -66,7 +69,7 @@ export default function Login() {
 								<div className='group'>
 									<input
 										type='email'
-										name="email"
+										name='email'
 										className='group_control'
 										placeholder='Enter Your Email'
 										onChange={handleInputs}
@@ -86,8 +89,8 @@ export default function Login() {
 									<input
 										type='submit'
 										className='btn btn-default btn-block'
-										value={loading ? "..." : 'Login'}
-										onClick={userLogin}
+										value={loading ? "..." : "Login"}
+										onClick={(e) => userLogin(e)}
 									/>
 								</div>
 							</form>
