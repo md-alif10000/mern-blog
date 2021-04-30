@@ -24,6 +24,7 @@ export const register = (state) => {
                    
 				});
                 localStorage.setItem("token",token)
+				dispatch({type:'SET_TOKEN',payload:token})
                 toast.success("Successfully Registered...!");
 			}
 
@@ -54,11 +55,13 @@ export const login = (state) => {
 		try {
 			const res = await axios.post("/login", state, config);
 			console.log(res);
-			console.log("alif");
+			const {token}=res.data
 			if (res.status == 200) {
 				dispatch({
 					type: authTypes.LOGIN_SUCCESS,
 				});
+				localStorage.setItem("token", token);
+				dispatch({ type: "SET_TOKEN", payload: token });
 				toast.success("Login successful..!");
 			}
 		} catch (error) {
