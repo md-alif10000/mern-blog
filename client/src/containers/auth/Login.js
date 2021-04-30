@@ -1,9 +1,14 @@
 import React from "react";
 import BgImage from "./BgImage";
+import { Helmet } from "react-helmet";
 
 export default function Login() {
 	return (
 		<>
+		<Helmet>
+			<title>Login to this website</title>
+			<meta name="description" content="Login to start publishing post...." />
+		</Helmet>
 			<div className='row mt-80'>
 				<div className='col-8'>
 					<BgImage />
