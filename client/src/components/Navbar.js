@@ -1,9 +1,12 @@
  import React from 'react'
- import {useSelector} from 'react-redux'
+ import {useSelector ,useDispatch} from 'react-redux'
  import {Link} from 'react-router-dom'
+import { logout } from '../store/actions/authAction'
+
  
  export default function Navbar() {
 	 const {user}= useSelector(state => state.auth)
+const dispatch = useDispatch()
      return (
 				<nav className='navbar'>
 					<div className='container'>
@@ -18,7 +21,7 @@
 									<li>
 										<Link to='/dashboard'>{user.name}</Link>
 									</li>
-									<li>
+									<li onClick={() => dispatch(logout())}>
 										<Link to='/logout'>Logout</Link>
 									</li>
 								</div>
