@@ -8,6 +8,12 @@
 @import './scss//utils/utils';
 
 
+
 // import scss components
 
 @import "./scss/components/navbar.scss";
+@import "./scss/components/bgImage";
+@import "./scss/components//account";
+
+// Import scss layout
+@import "./scss/layout/grid";
