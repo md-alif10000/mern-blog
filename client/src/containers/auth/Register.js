@@ -1,9 +1,15 @@
 import React from 'react'
 import BgImage from './BgImage'
+import { Helmet } from "react-helmet";
 
 export default function Register() {
     return (
 			<>
+			<Helmet>
+				<title>Register here</title>
+				<meta name="description" content="Login here & start earning..." />
+
+			</Helmet>
 				<div className='row mt-80'>
 					<div className='col-8'>
 						<BgImage />
