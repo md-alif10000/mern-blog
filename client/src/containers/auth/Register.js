@@ -1,10 +1,12 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import BgImage from "./BgImage";
 import { Helmet } from "react-helmet";
-import { useDispatch ,useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 import { register } from "../../store/actions/authAction";
-export default function Register() {
+import {Redirect} from 'react-router-dom'
+
+export default function Register(props) {
 	const [state, setstate] = useState({
 		name: "",
 		email: "",
@@ -12,7 +14,7 @@ export default function Register() {
 		confirmPassword: "",
 	});
 	const dispatch = useDispatch();
-	const {loading,registerErrors}= useSelector(state => state.auth)
+	const { loading, registerErrors,user } = useSelector((state) => state.auth);
 
 	const handleInputs = (e) => {
 		setstate({
@@ -24,20 +26,22 @@ export default function Register() {
 
 	const userRegister = async (e) => {
 		e.preventDefault();
+			if (state.password !== state.confirmPassword) {
+				return toast.error(`Password didn't match`);
+			}
 		dispatch(register(state));
 	};
 
 	useEffect(() => {
-		if(registerErrors.length > 0){
-			registerErrors.map(err=>(
-						toast.error(`${err.msg}`)
-
-			))
-	
+		if (registerErrors.length > 0) {
+			registerErrors.map((err) => toast.error(`${err.msg}`));
 		}
+		if(user){
+			props.history.push('/dashboard')
 		
-	console.log(registerErrors)
-	}, [registerErrors])
+
+		}
+	}, [registerErrors]);
 	return (
 		<>
 			<Helmet>
@@ -56,7 +60,7 @@ export default function Register() {
 								border: "1px solid #713200",
 								padding: "5px",
 								color: "#713200",
-								fontSize:'1.3rem'
+								fontSize: "1.3rem",
 							},
 						}}
 					/>

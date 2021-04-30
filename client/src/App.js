@@ -6,6 +6,7 @@ import Home from './containers/Home';
 import {Provider} from "react-redux";
 import './main.scss'
 import store from './store';
+import Dashboard from './containers/Dashboard';
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
 				<Switch>
 					<Route path='/login' component={Login} />
 					<Route path='/register' component={Register} />
+					<Route path='/dashboard' component={Dashboard} />
 					<Route path='/' exact component={Home} />
 				</Switch>
 			</Router>

@@ -15,13 +15,15 @@ export const register = (state) => {
 
 		try {
 			const res = await axios.post("/register", state, config);
-			  console.log(res);
+			  console.log(res.data);
               console.log('alif')
+              const {token}=res.data
 			if (res.status == 201) {
 				dispatch({
 					type: authTypes.REGISTER_SUCCESS,
                    
 				});
+                localStorage.setItem("token",token)
                 toast.success("Successfully Registered...!");
 			}
 
