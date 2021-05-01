@@ -3,7 +3,8 @@
 
 // Import scss abstract
 @import './scss/abstracts/variables';
-@import "./scss/abstracts//mixin"  ;
+@import "./scss/abstracts/mixin"  ;
+@import "./scss/abstracts/extends"  ;
 
 // Import scss utils
 @import './scss//utils/utils';
@@ -15,6 +16,7 @@
 @import "./scss/components/navbar.scss";
 @import "./scss/components/bgImage";
 @import "./scss/components//account";
+@import "./scss/components/notFound";
 
 // Import scss layout
 @import "./scss/layout/grid";
