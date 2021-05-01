@@ -6,7 +6,7 @@ const initState = {
 	registerErrors: [],
 	loginErrors: [],
 	token: "",
-	user: '',
+	user: "",
 };
 
 const verifyToken = (token) => {
@@ -18,7 +18,6 @@ const verifyToken = (token) => {
 	} else {
 		return decodedToken;
 	}
-
 };
 
 const token = localStorage.getItem("token");
@@ -67,6 +66,12 @@ const AuthReducer = (state = initState, action) => {
 			const decoded = verifyToken(action.payload);
 			const { user } = decoded;
 			return (state = { ...state, token: action.payload, user });
+		case authTypes.LOGOUT_SUCCESS:
+			return (state = {
+				...state,
+				token: "",
+				user: "",
+			});
 
 		default:
 			return state;

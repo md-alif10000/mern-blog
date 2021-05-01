@@ -19,10 +19,13 @@ const dispatch = useDispatch()
 							{user ? (
 								<div className='navbar_right'>
 									<li>
-										<Link to='/dashboard'>{user.name}</Link>
+										<Link to='/create'>Create post</Link>
+									</li>
+									<li>
+										<Link to="/dashboard">{user.name}</Link>
 									</li>
 									<li onClick={() => dispatch(logout())}>
-										<Link to='/logout'>Logout</Link>
+										<span to='/logout'>Logout</span>
 									</li>
 								</div>
 							) : (

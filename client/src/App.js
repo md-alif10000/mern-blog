@@ -9,6 +9,8 @@ import store from "./store";
 import Dashboard from "./containers/Dashboard";
 import PrivateRoute from "./private/PrivateRoute";
 import RouteLink from "./private/RouteLink";
+import NotFound from "./containers/NotFound";
+
 
 function App() {
 	return (
@@ -16,11 +18,11 @@ function App() {
 			<Router>
 				<Navbar />
 				<Switch>
-					<RouteLink path='/login' component={Login} />
-					<RouteLink path='/register' component={Register} />
+					<RouteLink path='/login' exact component={Login} />
+					<RouteLink path='/register' exact component={Register} />
 					<PrivateRoute path='/dashboard' component={Dashboard} />
-
 					<Route path='/' exact component={Home} />
+					<Route component={NotFound} />
 				</Switch>
 			</Router>
 		</Provider>
