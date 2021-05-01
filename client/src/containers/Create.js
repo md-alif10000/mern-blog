@@ -5,9 +5,9 @@ import ReactQuill from "react-quill";
 import toast, { Toaster } from "react-hot-toast";
 import { createPost } from "../store/actions/postAction";
 import "react-quill/dist/quill.snow.css";
-import { set } from "mongoose";
 
-export default function Create() {
+
+export default function Create(props) {
 	const [currentImage, setCurrentImage] = useState("Choose Image");
 	const [image, setImage] = useState(null);
 	const [value, setValue] = useState("");
@@ -17,7 +17,7 @@ export default function Create() {
 	const [slugButton, setSlugButton] = useState(false);
 	const [imagePreview, setImagePreview] = useState("");
 
-	const { createErrors } = useSelector((state) => state.post);
+	const { createErrors, redirect } = useSelector((state) => state.post);
 	const { user } = useSelector((state) => state.auth);
 
 	const dispatch = useDispatch();
@@ -70,21 +70,28 @@ export default function Create() {
 	};
 
 	const fileHandle = (e) => {
-		setImage(e.target.files[0]);
-		setCurrentImage(e.target.files[0].name);
-		const reader = new FileReader();
-		reader.onloadend = () => {
-			setImagePreview(reader.result);
-		};
+		if(e.target.files.length !==0){
+				setImage(e.target.files[0]);
+				setCurrentImage(e.target.files[0].name);
+				const reader = new FileReader();
+				reader.onloadend = () => {
+					setImagePreview(reader.result);
+				};
 
-		reader.readAsDataURL(e.target.files[0]);
+				reader.readAsDataURL(e.target.files[0]);
+
+		}
+	
 	};
 
 	useEffect(() => {
 		if (createErrors.length > 0) {
 			createErrors.map((err) => toast.error(`${err.msg}`));
 		}
-	}, [createErrors]);
+		if(redirect){
+			props.history.push('/dashboard')
+		}
+	}, [createErrors,redirect]);
 
 	return (
 		<div className='mt-100'>

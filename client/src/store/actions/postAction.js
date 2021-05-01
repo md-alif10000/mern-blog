@@ -13,10 +13,11 @@ export const createPost = (form) => {
 			
 
 			if (res.status == 201) {
-				toast.success("Post created successfully.....!");
+				toast.success("Your post have  created successfully.....!");
 				dispatch({
 					type: postTypes.CREATE_POST_SUCCESS,
 				});
+				dispatch({type:postTypes.REDIRECT_TRUE})
 
 				
 			}
