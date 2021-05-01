@@ -34,7 +34,7 @@ const dispatch = useDispatch()
 										<Link to='/login'>Login</Link>
 									</li>
 									<li>
-										<Link to='/register'>Register</Link>
+										<Link to='/register'>Register </Link>
 									</li>
 								</div>
 							)}
