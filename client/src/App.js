@@ -10,6 +10,7 @@ import Dashboard from "./containers/Dashboard";
 import PrivateRoute from "./private/PrivateRoute";
 import RouteLink from "./private/RouteLink";
 import NotFound from "./containers/NotFound";
+import Create from "./containers/Create";
 
 
 function App() {
@@ -20,7 +21,8 @@ function App() {
 				<Switch>
 					<RouteLink path='/login' exact component={Login} />
 					<RouteLink path='/register' exact component={Register} />
-					<PrivateRoute path='/dashboard' component={Dashboard} />
+					<PrivateRoute path='/dashboard' exact component={Dashboard} />
+					<PrivateRoute path='/create' exact component={Create} />
 					<Route path='/' exact component={Home} />
 					<Route component={NotFound} />
 				</Switch>

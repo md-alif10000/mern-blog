@@ -26,6 +26,9 @@
 .mt-80{
     margin-top: 8rem;
 }
+.mt-100{
+    margin-top: 10rem;
+}
 .group{
     margin-bottom:1.3rem ;
     &_control{
@@ -64,4 +67,31 @@
 .form-heading{
     font-size: 2.5rem;
     font-weight: 600;
+}
+.card{
+    background: $white;
+    padding: 1.5rem;
+    &_h3{
+        font-size: 1.6rem;
+        font-weight: 500;
+    }
+
+}
+label{
+    display: block;
+    width: 100%;
+    font-size: 1.4rem;
+    margin-bottom: 0.4rem;
+
+}
+#image{
+    display: none;
+}
+.image_label{
+    display: block;
+    width: 100%;
+    padding: 1.5rem;
+    background: #b2bec3;
+    color: $white;
+    cursor: pointer;
 }
