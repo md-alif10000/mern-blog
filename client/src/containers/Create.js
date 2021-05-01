@@ -1,18 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 import ReactQuill from "react-quill";
+import toast, { Toaster } from "react-hot-toast";
+import { createPost } from "../store/actions/postAction";
 import "react-quill/dist/quill.snow.css";
+import { set } from "mongoose";
 
 export default function Create() {
-
 	const [currentImage, setCurrentImage] = useState("Choose Image");
-    const [image, setImage] = useState(null)
+	const [image, setImage] = useState(null);
 	const [value, setValue] = useState("");
 	const [slug, setSlug] = useState("");
 	const [title, setTitle] = useState("");
-    const [meta, setMeta] = useState('')
-    const [slugButton, setSlugButton] = useState(false)
-    const [imagePreview, setImagePreview] = useState('')
+	const [meta, setMeta] = useState("");
+	const [slugButton, setSlugButton] = useState(false);
+	const [imagePreview, setImagePreview] = useState("");
+
+	const { createErrors } = useSelector((state) => state.post);
+	const { user } = useSelector((state) => state.auth);
+
+	const dispatch = useDispatch();
 
 	const handleTitle = (e) => {
 		setTitle(e.target.value);
@@ -21,26 +29,30 @@ export default function Create() {
 		console.log(Slug);
 	};
 
+	const createpost = (e) => {
+		e.preventDefault();
 
-    const createPost=(e)=>{
-        e.preventDefault()
-        
-        const form =new FormData();
-        form.append('title',title)
-        // form.append('body',body)
-        form.append('image',image)
-        form.append('slug',slug)
-        form.append('meta',meta)
+		const form = new FormData();
+		form.append("title", title);
+		form.append("body", value);
+		form.append("image", image);
+		form.append("slug", slug);
+		form.append("meta", meta);
+		form.append("user", user._id);
+		dispatch(createPost(form));
 
-        console.log(form)
+		// setSlug("");
+		// setValue("");
+		// setImage(null);
+		// setImagePreview("");
+		// setMeta("");
+		// setTitle("");
+	};
 
-        console.log(title,image,slug,meta)
-    }
-
-    const handleSlug=e=>{
-        setSlugButton(true)
-        setSlug(e.target.value)
-    }
+	const handleSlug = (e) => {
+		setSlugButton(true);
+		setSlug(e.target.value);
+	};
 
 	const handleUrl = (e) => {
 		e.preventDefault();
@@ -50,23 +62,43 @@ export default function Create() {
 	};
 
 	const fileHandle = (e) => {
-        setImage(e.target.files[0])
+		setImage(e.target.files[0]);
 		setCurrentImage(e.target.files[0].name);
-        const reader= new FileReader()
-        reader.onloadend=()=>{
-            setImagePreview(reader.result)
-        }
+		const reader = new FileReader();
+		reader.onloadend = () => {
+			setImagePreview(reader.result);
+		};
 
-        reader.readAsDataURL(e.target.files[0])
+		reader.readAsDataURL(e.target.files[0]);
 	};
+
+	useEffect(() => {
+		if (createErrors.length > 0) {
+			createErrors.map((err) => toast.error(`${err.msg}`));
+		}
+	}, [createErrors]);
+
 	return (
 		<div className='mt-100'>
 			<Helmet>
 				<title>Create new post</title>
 				<meta name='description' content='Create new post' />
 			</Helmet>
+			<Toaster
+				position='top-right'
+				reverseOrder={false}
+				toastOptions={{
+					className: "",
+					style: {
+						border: "1px solid #713200",
+						padding: "10px",
+						color: "#713200",
+						fontSize: "1.4rem",
+					},
+				}}
+			/>
 			<div className='container'>
-				<form >
+				<form>
 					<div className='row .ml-minus-15 .mr-minus-15'>
 						<div className='col-6 p-15'>
 							<div className='card'>
@@ -102,16 +134,7 @@ export default function Create() {
 										style={{ padding: "10px 0px" }}
 										placeholder='write your post body....'
 										value={value}
-										onChange={(e) => console.log(e)}
-									/>
-								</div>
-
-								<div className='group'>
-									<input
-										type='submit'
-										className='btn btn-default btn-block'
-										value='Create Post'
-                                        onClick={createPost}
+										onChange={setValue}
 									/>
 								</div>
 							</div>
@@ -119,8 +142,6 @@ export default function Create() {
 
 						<div className='col-6 p-15'>
 							<div className='card'>
-								
-
 								<div className='group'>
 									<label htmlFor='slug'>Post URL (Slug)</label>
 									<input
@@ -148,11 +169,31 @@ export default function Create() {
 								</div>
 								<div className='group'>
 									<label htmlFor='meta'>Meta Description</label>
-									<textarea className="group_control" 
-                                    placeholder='meta description...' id='meta' name='meta' rows='7' 
-                                    defaultValue={meta}
-                                    onChange={(e)=>setMeta(e.target.value)} ></textarea>
-                                    {meta ? <div className="font-16">{meta.length} Letters</div>: "Add meta description "}
+									<textarea
+										className='group_control'
+										placeholder='meta description...'
+										id='meta'
+										name='meta'
+										rows='7'
+										defaultValue={meta}
+										onChange={(e) => setMeta(e.target.value)}></textarea>
+									{meta ? (
+										<div className='font-16'>{meta.length} Letters</div>
+									) : (
+										"Add meta description "
+									)}
+								</div>
+								<div className='group'>
+									<button
+										className='btn btn-default btn-block'
+										onClick={(e) => createpost(e)}>
+										Create Post
+									</button>
+									{/* <button
+										type='submit'
+										className='btn btn-default btn-block'
+										value='Create Post'
+									/> */}
 								</div>
 							</div>
 						</div>

@@ -33,3 +33,24 @@ exports.isLoginValidated = (req, res, next) => {
 		next();
 	}
 };
+
+
+
+exports.postValidation = [
+
+	// body("user").not().isEmpty().withMessage("Please login first."),
+	// body("title").not().isEmpty().withMessage("Title is required"),
+	// body("slug").not().isEmpty().withMessage("Slug is required"),
+	// body("image").not().isEmpty().withMessage("Image is required"),
+	// body("meta").not().isEmpty().withMessage("Meta description is required "),
+];
+
+exports.isPostValidated = (req, res, next) => {
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		console.log(req);
+		return res.status(400).json({ errors: errors.array() });
+	} else {
+		next();
+	}
+};

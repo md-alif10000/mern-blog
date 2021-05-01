@@ -2,31 +2,29 @@ import { authTypes } from "../types";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Redirect } from "react-router";
+import Api from "../Api";
 
 export const register = (state) => {
 	return async (dispatch) => {
-		const config = {
-			headers: {
-				"Content-Type": "application/json",
-			},
-		};
-
+	
 		dispatch({ type: authTypes.REGISTER_REQUEST });
 
 		try {
-			const res = await axios.post("/register", state, config);
+			const res = await Api.post("/register", state);
 			console.log(res.data);
 			console.log("alif");
 			const { token } = res.data;
 			if (res.status == 201) {
+				toast.success("Successfully Registered...!");
 				dispatch({
 					type: authTypes.REGISTER_SUCCESS,
 				});
 				localStorage.setItem("token", token);
 				dispatch({ type: "SET_TOKEN", payload: token });
-				toast.success("Successfully Registered...!");
+				
 			}
 		} catch (error) {
+			console.log(error)
 			console.log(error.response.data.errors);
 
 			dispatch({
@@ -39,25 +37,21 @@ export const register = (state) => {
 
 export const login = (state) => {
 	return async (dispatch) => {
-		const config = {
-			headers: {
-				"Content-Type": "application/json",
-			},
-		};
-
+	
 		dispatch({ type: authTypes.LOGIN_REQUEST });
 
 		try {
-			const res = await axios.post("/login", state, config);
+			const res = await Api.post("/login", state);
 			console.log(res);
 			const { token } = res.data;
 			if (res.status == 200) {
+				toast.success("Login successful..!");
 				dispatch({
 					type: authTypes.LOGIN_SUCCESS,
 				});
 				localStorage.setItem("token", token);
 				dispatch({ type: "SET_TOKEN", payload: token });
-				toast.success("Login successful..!");
+				
 			}
 		} catch (error) {
 			console.log(error.response.data.errors);
