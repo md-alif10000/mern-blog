@@ -3,10 +3,12 @@ import thunk from 'redux-thunk'
 import { composeWithDevTools } from "redux-devtools-extension";
 
 import AuthReducer from './reducers/AuthReducer'
+import PostReducer from "./reducers/PostReducer";
 
 
 const rootReducer=combineReducers({
-    auth:AuthReducer
+    auth:AuthReducer,
+	post:PostReducer
 })
 
 
