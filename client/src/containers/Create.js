@@ -26,11 +26,19 @@ export default function Create() {
 		setTitle(e.target.value);
 		const Slug = e.target.value.trim().split(" ").join("-");
 		setSlug(Slug);
-		console.log(Slug);
+		
 	};
 
 	const createpost = (e) => {
 		e.preventDefault();
+
+		if (image == null) return toast.error(`Image is required`);
+		else {
+			const ext = image.type.split("/")[1].toLowerCase();
+			if (ext !== "jpg" && ext !== "png" && ext !== "jpeg") {
+				return toast.error(`${ext} file is not supported`);
+			}
+		}
 
 		const form = new FormData();
 		form.append("title", title);

@@ -4,11 +4,8 @@ exports.createPost = async (req, res) => {
 	try {
 		const { user, title, slug, body, meta } = req.body;
 		console.log(req.body);
-		// if (req.file.filename){
-		// 	console.log(req.file.filename);
-
-		// }
-		const image = req.file ?  req.file.filename : "";
+	
+		const image = req.file ? req.file.filename : "";
 
 		const errors = [];
 		if (user == "") errors.push({ msg: "Please login first" });
@@ -16,13 +13,21 @@ exports.createPost = async (req, res) => {
 		if (slug == "") errors.push({ msg: "Slug is required" });
 		if (body == "") errors.push({ msg: "Body is required" });
 		if (meta == "") errors.push({ msg: "Meta description is required" });
-		if (image=="") errors.push({ msg: "Image is required" });
+		if (!req.file) {
+			errors.push({ msg: "Image is required" });
+		} else {
+			const fileType = req.file.mimetype;
+			const ext=fileType.split('/')[1].toLowerCase();
+			if(ext!=='jpg' && ext!=='png' && ext!=='jpeg') errors.push({ msg: "This file is not supported" });
+		}
+		if (image == "") errors.push({ msg: "Image is required" });
+		// if(fileType==)
 
-		if (errors.length > 0) return res.status(400).json({errors:errors});
+		if (errors.length > 0) return res.status(400).json({ errors: errors });
 
 		const checkPost = await Post.findOne({ slug });
 		if (checkPost) {
-		   	return res.status(400).json({ errors: [{ msg: "Slug Alreary Exist" }] });
+			return res.status(400).json({ errors: [{ msg: "Slug Alreary Exist" }] });
 		} else {
 			const post = await new Post({
 				user,
