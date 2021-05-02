@@ -1,7 +1,7 @@
 import React,{useEffect} from 'react'
 import toast, { Toaster } from "react-hot-toast";
 import {useSelector,useDispatch} from 'react-redux'
-import {Halmet} from 'react-helmet'
+import {Helmet} from 'react-helmet'
 import { postTypes } from '../store/types';
 
 export default function Dashboard() {
