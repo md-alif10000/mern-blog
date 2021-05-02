@@ -10,7 +10,7 @@
         border-left:0.4rem dotted $primary;
         border-bottom:0.4rem dotted $primary;
         border-right:0.4rem solid transparent;
-        animation: loader 1s linear;
+        animation: loader 0.7s infinite;
         @keyframes loader {
             100%{transform:rotate(360deg) ;}
             

@@ -27,14 +27,14 @@ export const createPost = (form) => {
 	};
 };
 
-export const getUserPosts = () => {
+export const getUserPosts = (pageNo) => {
 	return async (dispatch) => {
 		dispatch({ type: postTypes.GET_USER_POST_REQUEST });
 		try {
-					const res =await Api.get("/user/posts");
+					const res =await Api.get(`/user/posts/${pageNo}`);
 					console.log(res.data);
 					dispatch({type:postTypes.GET_USER_POST_SUCCESS,
-					payload:res.data.posts})
+					payload:res.data})
 			
 		} catch (error) {
 			console.log(error)

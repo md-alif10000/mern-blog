@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 import { login } from "../../store/actions/authAction";
+import Loader from "../../components/Loader";
 
 export default function Login(props) {
 	const [state, setstate] = useState({
@@ -33,9 +34,12 @@ export default function Login(props) {
 			if (user) {
 				props.history.push("/dashboard");
 			}
+			if(loading){
+				return <Loader/>
+			}
 
 		console.log(loginErrors);
-	}, [loginErrors,user]);
+	}, [loginErrors,user,loading]);
 	return (
 		<>
 			<Helmet>

@@ -4,11 +4,10 @@ exports.createPost = async (req, res) => {
 	try {
 		const { title, slug, body, meta } = req.body;
 
-
 		const image = req.file ? req.file.filename : "";
 
 		const errors = [];
-		
+
 		if (title == "") errors.push({ msg: "Title is required" });
 		if (slug == "") errors.push({ msg: "Slug is required" });
 		if (body == "") errors.push({ msg: "Body is required" });
@@ -31,7 +30,7 @@ exports.createPost = async (req, res) => {
 			return res.status(400).json({ errors: [{ msg: "Slug Alreary Exist" }] });
 		} else {
 			const post = await new Post({
-				user:req.user._id,
+				user: req.user._id,
 				title,
 				slug,
 				body,
@@ -60,23 +59,16 @@ exports.createPost = async (req, res) => {
 	}
 };
 
-exports.getUsersPosts =async (req, res) => {
+exports.getUsersPosts = async (req, res) => {
+	const page = req.params.page;
+	const perPage = 3;
+	const skip = (page - 1) * perPage;
 
 	try {
-			
-	await	Post.find({ user: req.user._id }).exec((error,posts) => {
-			if (error) {
-				console.log(error);
-				return res
-					.status(400)
-					.json({ errors: [{ msg: "Something went wrong" }] });
-			}
+		const count = await Post.find({ user: req.user._id }).countDocuments();
 
-			if (posts) {
-	
-				return res.status(200).json({ posts });
-			}
-		});
+		const posts = await Post.find({ user: req.user._id }).skip(skip).limit(perPage).sort({updatedAt:-1});
+		return res.status(200).json({ posts,count,perPage });
 	} catch (error) {
 		return res.status(500).json({ error: [{ msg: error.message }] });
 	}

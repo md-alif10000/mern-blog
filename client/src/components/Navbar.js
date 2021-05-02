@@ -22,7 +22,7 @@ const dispatch = useDispatch()
 										<Link to='/create'>Create post</Link>
 									</li>
 									<li>
-										<Link to="/dashboard">{user.name}</Link>
+										<Link to="/dashboard/1">{user.name}</Link>
 									</li>
 									<li onClick={() => dispatch(logout())}>
 										<span to='/logout'>Logout</span>
