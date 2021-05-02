@@ -12,7 +12,6 @@ import RouteLink from "./private/RouteLink";
 import NotFound from "./containers/NotFound";
 import Create from "./containers/Create";
 
-
 function App() {
 	return (
 		<Provider store={store}>

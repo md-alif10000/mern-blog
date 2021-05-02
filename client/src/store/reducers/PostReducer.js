@@ -7,7 +7,7 @@ const initState = {
 	message:''
 };
 
-const AuthReducer = (state = initState, action) => {
+const PostReducer = (state = initState, action) => {
 	const { payload } = action;
 	console.log(payload);
 	switch (action.type) {
@@ -18,7 +18,7 @@ const AuthReducer = (state = initState, action) => {
 			});
 
 		case postTypes.CREATE_POST_SUCCESS:
-			return (state = { ...state, loading: false ,createErrors:[]});
+			return (state = { ...state, loading: false, createErrors: [] });
 		case postTypes.CREATE_POST_FAILURE:
 			return (state = { ...state, loading: false, createErrors: payload });
 		case postTypes.REDIRECT_TRUE:
@@ -31,4 +31,4 @@ const AuthReducer = (state = initState, action) => {
 	}
 };
 
-export default AuthReducer;
+export default PostReducer;

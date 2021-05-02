@@ -7,6 +7,7 @@ const router = require("express").Router();
 const multer = require("multer");
 const shortid = require("shortid");
 const path = require("path");
+const { isLoggedin } = require("../middleware/auth-middleware");
 
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
@@ -39,9 +40,8 @@ const upload = multer({
 
 router.post(
 	"/create-post",
-	
+	isLoggedin,
 upload.single("image"),
-
 	createPost
 );
 
