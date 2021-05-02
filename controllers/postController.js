@@ -2,13 +2,13 @@ const Post = require("../models/Post");
 
 exports.createPost = async (req, res) => {
 	try {
-		const { user, title, slug, body, meta } = req.body;
-		console.log(req.body);
-	
+		const { title, slug, body, meta } = req.body;
+
+
 		const image = req.file ? req.file.filename : "";
 
 		const errors = [];
-		if (user == "") errors.push({ msg: "Please login first" });
+		
 		if (title == "") errors.push({ msg: "Title is required" });
 		if (slug == "") errors.push({ msg: "Slug is required" });
 		if (body == "") errors.push({ msg: "Body is required" });
@@ -17,8 +17,9 @@ exports.createPost = async (req, res) => {
 			errors.push({ msg: "Image is required" });
 		} else {
 			const fileType = req.file.mimetype;
-			const ext=fileType.split('/')[1].toLowerCase();
-			if(ext!=='jpg' && ext!=='png' && ext!=='jpeg') errors.push({ msg: "This file is not supported" });
+			const ext = fileType.split("/")[1].toLowerCase();
+			if (ext !== "jpg" && ext !== "png" && ext !== "jpeg")
+				errors.push({ msg: "This file is not supported" });
 		}
 		if (image == "") errors.push({ msg: "Image is required" });
 		// if(fileType==)
@@ -30,7 +31,7 @@ exports.createPost = async (req, res) => {
 			return res.status(400).json({ errors: [{ msg: "Slug Alreary Exist" }] });
 		} else {
 			const post = await new Post({
-				user,
+				user:req.user._id,
 				title,
 				slug,
 				body,
@@ -55,6 +56,28 @@ exports.createPost = async (req, res) => {
 		}
 	} catch (error) {
 		console.log(error);
-		res.status(500).json({ errors: error });
+		return res.status(500).json({ errors: error });
+	}
+};
+
+exports.getUsersPosts =async (req, res) => {
+
+	try {
+			
+	await	Post.find({ user: req.user._id }).exec((error,posts) => {
+			if (error) {
+				console.log(error);
+				return res
+					.status(400)
+					.json({ errors: [{ msg: "Something went wrong" }] });
+			}
+
+			if (posts) {
+	
+				return res.status(200).json({ posts });
+			}
+		});
+	} catch (error) {
+		return res.status(500).json({ error: [{ msg: error.message }] });
 	}
 };

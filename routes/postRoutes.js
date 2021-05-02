@@ -1,4 +1,4 @@
-const { createPost } = require("../controllers/postController");
+const { createPost, getUsersPosts } = require("../controllers/postController");
 const {
 postValidation,
 isPostValidated
@@ -44,7 +44,7 @@ router.post(
 upload.single("image"),
 	createPost
 );
-
+router.get("/user/posts", isLoggedin, getUsersPosts);
 
 
 module.exports = router;
