@@ -4,6 +4,7 @@ const initState = {
 	loading: false,
 	createErrors: [],
 	redirect:false,
+	posts:[],
 	message:''
 };
 
@@ -26,6 +27,12 @@ const PostReducer = (state = initState, action) => {
 
 		case postTypes.REDIRECT_FALSE:
 			return (state = { ...state, redirect: false });
+			case postTypes.GET_USER_POST_REQUEST:
+				return state={...state,loading:true}
+		case postTypes.GET_USER_POST_SUCCESS:
+			return state={...state,
+				loading:false,
+				posts:action.payload}	
 		default:
 			return state;
 	}

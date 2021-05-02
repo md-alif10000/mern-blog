@@ -7,7 +7,7 @@ const createToken = (user) => {
 };
 exports.register = async (req, res) => {
 	const { name, email, username, password } = req.body;
-	console.log(req.body);
+	
 
 	try {
 		const checkUser = await User.findOne({ email });
