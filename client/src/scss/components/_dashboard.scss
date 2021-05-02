@@ -1,5 +1,5 @@
 .dashboard_post:first-child{
-    border-top: 1px solid #e5e7ed;
+    border-top: 1px solid $silverLight;
     border-top-left-radius: 0.6rem;
     border-top-right-radius: 0.6rem;
 }
@@ -12,7 +12,7 @@
 .dashboard_post{
     background: $white;
     padding: 2rem 1.3rem;
-    border: 1px solid #e5e7ed;
+    border: 1px solid $silverLight;
     border-top: none;
     margin-bottom: 1rem;
     display: flex;

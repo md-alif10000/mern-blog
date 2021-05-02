@@ -25,8 +25,17 @@
 .mt-100{
     margin-top: 10rem;
 }
+.m-15{
+    margin: 1.5rem;
+}
+.mb-15{
+    margin-bottom: 1.5rem;
+}
 .p-15{
     padding: 1.5rem;
+}
+.px-15{
+    padding: 0 1.5rem;
 }
 .ml-minus-15{
     margin-left: -1.5rem;
@@ -133,4 +142,8 @@ a{
     font-size: 2rem;
     color: $primary;
     cursor: pointer;
+}
+.bg-white{
+    background: $white;
+
 }
