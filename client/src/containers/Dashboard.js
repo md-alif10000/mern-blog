@@ -17,15 +17,27 @@ export default function Dashboard() {
 		}, [redirect]);
 
     return (
-        <>
-        <Helmet>
-            <title>User Dashboard</title>
-            <meta name="description" content="Its your dashboard" />
-        </Helmet>
-        <div>
-            <Toaster/>
-            Dashboard
-        </div>
-        </>
-    )
+			<>
+				<Helmet>
+					<title>User Dashboard</title>
+					<meta name='description' content='Its your dashboard' />
+				</Helmet>
+				<div>
+					<Toaster
+						position='top-right'
+						reverseOrder={false}
+						toastOptions={{
+							className: "",
+							style: {
+								border: "1px solid #713200",
+								padding: "10px",
+								color: "#713200",
+								fontSize: "1.5rem",
+							},
+						}}
+					/>
+					Dashboard
+				</div>
+			</>
+		);
 }

@@ -86,11 +86,13 @@ export default function Create(props) {
 
 	useEffect(() => {
 		if (createErrors.length > 0) {
+			console.log(createErrors);
 			createErrors.map((err) => toast.error(`${err.msg}`));
 		}
-		if(redirect){
-			props.history.push('/dashboard')
-		}
+		if (createErrors)console.log(createErrors)
+			if (redirect) {
+				props.history.push("/dashboard");
+			}
 	}, [createErrors,redirect]);
 
 	return (
@@ -108,7 +110,7 @@ export default function Create(props) {
 						border: "1px solid #713200",
 						padding: "10px",
 						color: "#713200",
-						fontSize: "1.4rem",
+						fontSize: "1.5rem",
 					},
 				}}
 			/>
