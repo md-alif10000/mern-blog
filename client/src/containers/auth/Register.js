@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 import { register } from "../../store/actions/authAction";
 import { Redirect } from "react-router-dom";
+import Loader from "../../components/Loader";
 
 export default function Register(props) {
 	const [state, setstate] = useState({
@@ -39,7 +40,10 @@ export default function Register(props) {
 		if (user) {
 			props.history.push("/dashboard");
 		}
-	}, [registerErrors, user]);
+		if (loading) {
+			return <Loader/>;
+		}
+	}, [registerErrors, user,loading]);
 	return (
 		<>
 			<Helmet>

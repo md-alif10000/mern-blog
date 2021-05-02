@@ -8,12 +8,19 @@ import { Link } from 'react-router-dom';
 import { BsPencilSquare, BsArchive } from "react-icons/bs";
 import Loader from '../components/Loader';
 import Sidebar from '../components/Sidebar';
+import Pagination from '../components/Pagination';
 ;
 
-export default function Dashboard() {
-    const {redirect,posts,loading}= useSelector(state => state.post)
+export default function Dashboard(props) {
+    const {redirect,posts,loading,perPage,count}= useSelector(state => state.post)
+    const pageNo = props.match.params.page
+			? parseInt(props.match.params.page)
+			: 1;
+			
 
     const dispatch = useDispatch()
+
+
 
     useEffect(() => {
 		if(redirect){
@@ -23,8 +30,8 @@ export default function Dashboard() {
 		}, [redirect]);
 
     useEffect(() => {
-			dispatch(getUserPosts());
-		}, []);
+			dispatch(getUserPosts(pageNo));
+		}, [pageNo]);
 
     return (
 			<>
@@ -74,6 +81,7 @@ export default function Dashboard() {
 										</div>
 								  ))
 								: "You dont have any post yet"}
+                                <Pagination page={pageNo} perPage={perPage} count={count} url='/dashboard'/>
 						</div>
 					</div>
 				</div>

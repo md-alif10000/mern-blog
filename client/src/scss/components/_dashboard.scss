@@ -17,6 +17,7 @@
     margin-bottom: 1rem;
     display: flex;
     justify-content: space-between;
+    transition: .4s;
     &_title{
         font-size:1.6rem ;
         text-decoration: none;
@@ -24,6 +25,7 @@
         & a{
             text-decoration: none;
             color: $black;
+          
         }
     
      
@@ -35,5 +37,25 @@
             margin-right: 1rem;
             font-size: 2rem;
         }
+    }
+    &:hover{
+        background: $primary;
+        color: $white;
+   
+    }
+    &:hover{
+        background: $primary;
+        color: $white;
+   
+    }
+    &:hover a{
+       
+        color: $white;
+   
+    }
+    &:hover .icon{
+       
+        color: $white;
+   
     }
 }

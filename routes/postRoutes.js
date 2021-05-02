@@ -44,7 +44,7 @@ router.post(
 upload.single("image"),
 	createPost
 );
-router.get("/user/posts", isLoggedin, getUsersPosts);
+router.get("/user/posts/:page", isLoggedin, getUsersPosts);
 
 
 module.exports = router;
