@@ -54,5 +54,5 @@ export default function Pagination({ url, perPage, count, page }) {
 				);
 			}
 		};
-	return <div className='pagination'>{prev()} {links()} {next()} </div>;
+	return totalPage ? <div className='pagination'>{prev()} {links()} {next()} </div>:''
 }

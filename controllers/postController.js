@@ -1,4 +1,6 @@
 const Post = require("../models/Post");
+const { htmlToText } = require("html-to-text");
+const fs = require("fs");
 
 exports.createPost = async (req, res) => {
 	try {
@@ -59,6 +61,68 @@ exports.createPost = async (req, res) => {
 	}
 };
 
+exports.updatePost = async (req, res) => {
+	try {
+		const { title, slug, body, meta, _id,img } = req.body;
+
+		const image = req.file ? req.file.filename : img;
+
+		const errors = [];
+
+		if (title == "") errors.push({ msg: "Title is required" });
+		// if (slug == "") errors.push({ msg: "Slug is required" });
+		if (body == "") errors.push({ msg: "Body is required" });
+		if (meta == "") errors.push({ msg: "Meta description is required" });
+		if (!req.file) {
+			errors.push({ msg: "Image is required" });
+		} else {
+			const fileType = req.file.mimetype;
+			const ext = fileType.split("/")[1].toLowerCase();
+			if (ext !== "jpg" && ext !== "png" && ext !== "jpeg")
+				errors.push({ msg: "This file is not supported" });
+		}
+		// if (image == "") errors.push({ msg: "Image is required" });
+		// if(fileType==)
+
+		if (errors.length > 0) return res.status(400).json({ errors: errors });
+
+		const prevPost = await Post.findById(_id);
+		console.log(prevPost.image);
+		console.log("./uploads/" + prevPost.image);
+		if(req.file){
+			try {
+				fs.unlinkSync("./uploads/" + prevPost.image);
+			} catch (error) {
+				return res
+					.status(500)
+					.json({ error: [{ msg: "Something went wrong." }] });
+			}
+
+		}
+		
+
+
+		await Post.findByIdAndUpdate(
+			_id,
+			{ title, slug, body, meta, image },
+			(error, data) => {
+				if (error)
+					return res
+						.status(400)
+						.json({ error: [{ msg: "Something went wrong." }] });
+				if (data) {
+					return res.status(201).json({
+						message: "Post updated successfully",
+					});
+				}
+			}
+		);
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ errors: error });
+	}
+};
+
 exports.getUsersPosts = async (req, res) => {
 	const page = req.params.page;
 	const perPage = 3;
@@ -67,8 +131,21 @@ exports.getUsersPosts = async (req, res) => {
 	try {
 		const count = await Post.find({ user: req.user._id }).countDocuments();
 
-		const posts = await Post.find({ user: req.user._id }).skip(skip).limit(perPage).sort({updatedAt:-1});
-		return res.status(200).json({ posts,count,perPage });
+		const posts = await Post.find({ user: req.user._id })
+			.skip(skip)
+			.limit(perPage)
+			.sort({ updatedAt: -1 });
+		return res.status(200).json({ posts, count, perPage });
+	} catch (error) {
+		return res.status(500).json({ error: [{ msg: error.message }] });
+	}
+};
+
+exports.getSinglePost = async (req, res) => {
+	try {
+		const post = await Post.findById(req.params._id);
+
+		return res.status(200).json({ post });
 	} catch (error) {
 		return res.status(500).json({ error: [{ msg: error.message }] });
 	}

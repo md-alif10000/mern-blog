@@ -11,6 +11,7 @@ import PrivateRoute from "./private/PrivateRoute";
 import RouteLink from "./private/RouteLink";
 import NotFound from "./containers/NotFound";
 import Create from "./containers/Create";
+import Edit from "./containers/Edit";
 
 function App() {
 	return (
@@ -22,6 +23,7 @@ function App() {
 					<RouteLink path='/register' exact component={Register} />
 					<PrivateRoute path='/dashboard/:page?' exact component={Dashboard} />
 					<PrivateRoute path='/create' exact component={Create} />
+					<PrivateRoute path='/post/edit/:id' exact component={Edit} />
 					<Route path='/' exact component={Home} />
 					<Route component={NotFound} />
 				</Switch>

@@ -27,6 +27,41 @@ export const createPost = (form) => {
 	};
 };
 
+
+
+export const editPost = (form) => {
+	return async (dispatch) => {
+		dispatch({ type: postTypes.EDIT_POST_REQUEST });
+
+		try {
+			const res = await Api.put("/edit-post", form);
+
+			if (res.status == 201) {
+				toast.success("Your post have updated successfully.....!");
+				dispatch({
+					type: postTypes.EDIT_POST_SUCCESS,
+				});
+				dispatch({ type: postTypes.REDIRECT_TRUE });
+			}
+		} catch (error) {
+			const errors = error.response.data.errors;
+
+			dispatch({
+				type: postTypes.EDIT_POST_FAILURE,
+				payload: errors,
+			});
+		}
+	};
+};
+
+
+
+
+
+
+
+
+
 export const getUserPosts = (pageNo) => {
 	return async (dispatch) => {
 		dispatch({ type: postTypes.GET_USER_POST_REQUEST });
@@ -41,5 +76,21 @@ export const getUserPosts = (pageNo) => {
 			
 		}
 
+	};
+};
+
+
+export const getSinglePost = (_id) => {
+	return async (dispatch) => {
+		dispatch({ type: postTypes.GET_SINGLE_POST_REQUEST });
+		try {
+			const res = await Api.get(`/post/${_id}`);
+			console.log(res.data);
+			dispatch({ type: postTypes.GET_SINGLE_POST_SUCCESS, payload: res.data });
+		} catch (error) {
+			dispatch({type:postTypes.GET_SINGLE_POST_FAILURE,
+			payload:error.response.data.errors})
+			console.log(error);
+		}
 	};
 };
