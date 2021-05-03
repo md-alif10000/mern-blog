@@ -71,7 +71,7 @@ export default function Dashboard(props) {
 												<Link to={`/${post.slug}`}>{post.title}</Link>
 											</div>
 											<div className='icons'>
-												<Link to='/'>
+												<Link to={`/post/edit/${post._id}`}>
 													<BsPencilSquare className='icon' />
 												</Link>
 												<Link>

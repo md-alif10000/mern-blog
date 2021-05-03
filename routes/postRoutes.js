@@ -1,4 +1,9 @@
-const { createPost, getUsersPosts } = require("../controllers/postController");
+const {
+	createPost,
+	updatePost,
+	getUsersPosts,
+	getSinglePost,
+} = require("../controllers/postController");
 const {
 postValidation,
 isPostValidated
@@ -38,13 +43,11 @@ const upload = multer({
 
 
 
-router.post(
-	"/create-post",
-	isLoggedin,
-upload.single("image"),
-	createPost
-);
+router.post("/create-post", isLoggedin, upload.single("image"), createPost);
+
+router.put("/edit-post", isLoggedin, upload.single("image"), updatePost);
 router.get("/user/posts/:page", isLoggedin, getUsersPosts);
+router.get("/post/:_id", isLoggedin, getSinglePost);
 
 
 module.exports = router;

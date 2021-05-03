@@ -40,6 +40,9 @@ export default function Login(props) {
 
 		console.log(loginErrors);
 	}, [loginErrors,user,loading]);
+	if(loading){
+		return <Loader/>
+	}
 	return (
 		<>
 			<Helmet>

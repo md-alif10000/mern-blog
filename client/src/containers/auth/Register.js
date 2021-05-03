@@ -44,6 +44,10 @@ export default function Register(props) {
 			return <Loader/>;
 		}
 	}, [registerErrors, user,loading]);
+
+	if (loading) {
+		return <Loader />;
+	}
 	return (
 		<>
 			<Helmet>

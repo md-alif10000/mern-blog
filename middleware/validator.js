@@ -54,3 +54,8 @@ exports.isPostValidated = (req, res, next) => {
 		next();
 	}
 };
+
+
+exports.updateValidation=[
+	body('title')
+]
