@@ -3,6 +3,7 @@ const {
 	updatePost,
 	getUsersPosts,
 	getSinglePost,
+	deletePost,
 } = require("../controllers/postController");
 const {
 postValidation,
@@ -44,8 +45,9 @@ const upload = multer({
 
 
 router.post("/create-post", isLoggedin, upload.single("image"), createPost);
+router.delete("/post/delete/:_id",  deletePost);
 
-router.put("/edit-post", isLoggedin, upload.single("image"), updatePost);
+router.put("/post/edit-post", isLoggedin, upload.single("image"), updatePost);
 router.get("/user/posts/:page", isLoggedin, getUsersPosts);
 router.get("/post/:_id", isLoggedin, getSinglePost);
 

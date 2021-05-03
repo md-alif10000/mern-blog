@@ -3,7 +3,7 @@ import toast, { Toaster } from "react-hot-toast";
 import {useSelector,useDispatch} from 'react-redux'
 import {Helmet} from 'react-helmet'
 import { postTypes } from '../store/types';
-import { getUserPosts } from '../store/actions/postAction';
+import { deletePost, getUserPosts } from '../store/actions/postAction';
 import { Link } from 'react-router-dom';
 import { BsPencilSquare, BsArchive } from "react-icons/bs";
 import Loader from '../components/Loader';
@@ -12,7 +12,7 @@ import Pagination from '../components/Pagination';
 ;
 
 export default function Dashboard(props) {
-    const {redirect,posts,loading,perPage,count}= useSelector(state => state.post)
+    const {redirect,posts,loading,perPage,count,deleteErrors}= useSelector(state => state.post)
     const pageNo = props.match.params.page
 			? parseInt(props.match.params.page)
 			: 1;
@@ -27,11 +27,24 @@ export default function Dashboard(props) {
             dispatch({type:postTypes.REDIRECT_FALSE})
 
         }
-		}, [redirect]);
+
+			if (deleteErrors.length > 0) {
+				console.log(deleteErrors);
+				deleteErrors.map((err) => toast.error(`${err.msg}`));
+			}
+		}, [redirect,deleteErrors]);
 
     useEffect(() => {
 			dispatch(getUserPosts(pageNo));
 		}, [pageNo]);
+
+
+		const DeletePost=(_id)=>{
+
+			alert("Are sure to delete post ?")
+			
+			dispatch(deletePost(_id))
+		}
 
     return (
 			<>
@@ -74,7 +87,7 @@ export default function Dashboard(props) {
 												<Link to={`/post/edit/${post._id}`}>
 													<BsPencilSquare className='icon' />
 												</Link>
-												<Link>
+												<Link onClick={(e)=>DeletePost(post._id)}>
 													<BsArchive className='icon' />
 												</Link>
 											</div>

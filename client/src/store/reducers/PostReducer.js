@@ -4,6 +4,7 @@ const initState = {
 	loading: false,
 	createErrors: [],
 	editErrors:[],
+	deleteErrors:[],
 	redirect: false,
 	posts: [],
 	perPage: 0,
@@ -38,6 +39,17 @@ const PostReducer = (state = initState, action) => {
 		case postTypes.EDIT_POST_FAILURE:
 			return (state = { ...state, loading: false, editErrors: payload });
 
+		case postTypes.DELETE_POST_REQUEST:
+			return (state = {
+				...state,
+				loading: true,
+			});
+
+		case postTypes.DELETE_POST_SUCCESS:
+			return (state = { ...state, loading: false, deleteErrors: [] });
+		case postTypes.DELETE_POST_FAILURE:
+			return (state = { ...state, loading: false, deleteErrors: payload });
+
 		case postTypes.REDIRECT_TRUE:
 			return (state = { ...state, redirect: true });
 
@@ -63,12 +75,12 @@ const PostReducer = (state = initState, action) => {
 				loading: false,
 				singlepost: action.payload.post,
 			});
-			case postTypes.SET_ERRORS_EMPTY:
-				return state={
-					...state,
-					createErrors:[],
-					editErrors:[]
-				}
+		case postTypes.SET_ERRORS_EMPTY:
+			return (state = {
+				...state,
+				createErrors: [],
+				editErrors: [],
+			});
 		default:
 			return state;
 	}
