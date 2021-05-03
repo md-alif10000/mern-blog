@@ -34,7 +34,7 @@ export const editPost = (form) => {
 		dispatch({ type: postTypes.EDIT_POST_REQUEST });
 
 		try {
-			const res = await Api.put("/edit-post", form);
+			const res = await Api.put("/post/edit-post", form);
 
 			if (res.status == 201) {
 				toast.success("Your post have updated successfully.....!");
@@ -55,7 +55,31 @@ export const editPost = (form) => {
 };
 
 
+export const deletePost = (_id) => {
+	return async (dispatch) => {
+		dispatch({ type: postTypes.DELETE_POST_REQUEST });
 
+		try {
+			const res = await Api.delete(`/post/delete/${_id}`);
+
+			if (res.status == 200) {
+				toast.success("Your post have deleted successfully.....!");
+				dispatch({
+					type: postTypes.DELETE_POST_SUCCESS,
+				});
+				dispatch(getUserPosts(1))
+				dispatch({ type: postTypes.REDIRECT_TRUE });
+			}
+		} catch (error) {
+			const errors = error.response.data.errors;
+
+			dispatch({
+				type: postTypes.DELETE_POST_FAILURE,
+				payload: errors,
+			});
+		}
+	};
+};
 
 
 

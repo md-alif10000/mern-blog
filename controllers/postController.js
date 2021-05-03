@@ -123,6 +123,31 @@ exports.updatePost = async (req, res) => {
 	}
 };
 
+
+exports.deletePost=async(req,res)=>{
+	try {
+		
+		const deletedPost=await Post.findByIdAndDelete(req.params._id)
+
+		console.log(deletedPost.image)
+
+			try {
+				fs.unlinkSync("./uploads/" + deletedPost.image);
+				return res.status(200).json({ deletedPost });
+
+			} catch (error) {
+				return res
+					.status(500)
+					.json({ error: [{ msg: "Something went wrong." }] });
+			}
+
+	} catch (error) {
+		return res.status(500)
+		
+	}
+	
+}
+
 exports.getUsersPosts = async (req, res) => {
 	const page = req.params.page;
 	const perPage = 3;
