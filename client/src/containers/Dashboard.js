@@ -41,9 +41,14 @@ export default function Dashboard(props) {
 
 		const DeletePost=(_id)=>{
 
-			alert("Are sure to delete post ?")
+			const confirm=window.confirm("Are you really want to delete this post?")
+
+			if(confirm){
+				dispatch(deletePost(_id));
+
+			}
 			
-			dispatch(deletePost(_id))
+			
 		}
 
     return (
